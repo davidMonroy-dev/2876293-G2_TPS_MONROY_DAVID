@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asignaturas</title>
+    <link rel="stylesheet" href="/public/styles.css">
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 22px%;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+        form {
+            display: inline;
+        }
+        .edit-form {
+            display: none;
+        }
+        /* Estilos generales */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+h1, h2 {
+    text-align: center;
+    color: #333;
+}
+
+/* Estilos de la tabla */
+table {
+    width: 80%;
+    margin: 20px auto;
+    border-collapse: collapse;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background-color: #4CAF50;
+    color: white;
+}
+
+tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* Estilos para formularios */
+form {
+    margin: 20px 0;
+}
+
+form label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+form input[type="text"], form input[type="number"] {
+    width: calc(100% - 22px);
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+form button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+form button:hover {
+    background-color: #45a049;
+}
+
+/* Botones de acción */
+button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 8px 12px;
+    margin: 5px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+button.delete {
+    background-color: #f44336;
+}
+
+button.delete:hover {
+    background-color: #d32f2f;
+}
+
+/* Contenedor principal */
+.container {
+    width: 80%;
+    margin: 20px auto;
+}
+
+/* Estilos para formulario oculto de edición */
+.edit-form {
+    display: none;
+    margin-top: 10px;
+}
+
+.edit-form label, .edit-form input[type="text"], .edit-form button {
+    display: inline-block;
+    margin-right: 5px;
+}
+
+.edit-form input[type="text"] {
+    width: auto;
+}
+    </style>
+    <script>
+        function toggleEditForm(id) {
+            const form = document.getElementById('edit-form-' + id);
+            form.style.display = form.style.display === 'none' ? 'block' : 'none';
+        }
+    </script>
+</head>
+<body>
+    <h1>Asignaturas</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Profesor</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% asignaturas.forEach(asignatura => { %>
+                <tr>
+                    <td><%= asignatura.id %></td>
+                    <td><%= asignatura.nombre %></td>
+                    <td><%= asignatura.profesor %></td>
+                    <td>
+                        <!-- Botón para mostrar el formulario de edición -->
+                        <button onclick="toggleEditForm(<%= asignatura.id %>)">Editar</button>
+
+                        <!-- Formulario de edición -->
+                        <form id="edit-form-<%= asignatura.id %>" class="edit-form" action="/update/<%= asignatura.id %>" method="POST">
+                            <label for="nombre">Nombre:</label>
+                            <input type="text" name="nombre" value="<%= asignatura.nombre %>" required>
+
+                            <label for="profesor">Profesor:</label>
+                            <input type="text" name="profesor" value="<%= asignatura.profesor %>" required>
+
+                            <button type="submit">Guardar</button>
+                        </form>
+
+                        <!-- Botón para borrar la asignatura -->
+                        <form action="/delete/<%= asignatura.id %>" method="POST" onsubmit="return confirm('¿Estás seguro de que quieres eliminar esta asignatura?');">
+                            <button type="submit">Borrar</button>
+                        </form>
+                    </td>
+                </tr>
+            <% }) %>
+        </tbody>
+    </table>
+
+    <h2>Agregar Asignatura</h2>
+    <form action="/add" method="post">
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" name="nombre" style="width: 200px; padding: 5px; font-size: 14px; border: 1px solid #ccc; border-radius: 4px;" required>
+        
+        <button type="submit">Agregar</button>
+    </form>
+    
+</body>
+</html>
+
