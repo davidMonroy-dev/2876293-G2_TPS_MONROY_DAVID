@@ -169,8 +169,7 @@ button.delete:hover {
                             <label for="nombre">Nombre:</label>
                             <input type="text" name="nombre" value="<%= asignatura.nombre %>" required>
 
-                            <label for="profesor">Profesor:</label>
-                            <input type="text" name="profesor" value="<%= asignatura.profesor %>" required>
+                            
 
                             <button type="submit">Guardar</button>
                         </form>
@@ -188,11 +187,10 @@ button.delete:hover {
     <h2>Agregar Asignatura</h2>
     <form action="/add" method="post">
         <label for="nombre">Nombre:</label>
-        <input type="text" id="nombre" name="nombre" style="width: 200px; padding: 5px; font-size: 14px; border: 1px solid #ccc; border-radius: 4px;" required>
+        <input type="text" id="nombre" name="nombre" required>
         
         <button type="submit">Agregar</button>
     </form>
-    
 </body>
 </html>
 
