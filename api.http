@@ -1,0 +1,6 @@
+PUT  http://localhost:3000/update/15
+Content-Type: application/json
+
+{
+    "nombre": "Gestion automotriz"
+}
